@@ -51,7 +51,7 @@ def main():
                         file.write(chunk)
                         progress_bar.update(len(chunk))
 
-                    progress_bar.close()
+            progress_bar.close()
         else:
             print(f'Failed：{response.status_code}')
             failed_ls.append(fname)
