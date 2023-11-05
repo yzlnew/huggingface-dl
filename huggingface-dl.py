@@ -45,7 +45,7 @@ def main():
 
         progress_bar = tqdm(total=total_size, unit='B', unit_scale=True)
         if response.status_code == 200:
-            with open('downloaded_file.ext', 'wb') as file:
+            with open(f, 'wb') as file:
                 for chunk in response.iter_content(chunk_size=8192):
                     if chunk:
                         file.write(chunk)
