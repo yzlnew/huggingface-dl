@@ -12,6 +12,7 @@ def main():
     parser.add_argument('--category', type=str, default='datasets', help='Download category. Default is "datasets".')
     parser.add_argument('--proxy', type=str, required=True, help='Cloudflare proxy to accelerate.')
     parser.add_argument('--patterns', type=str, nargs='+', help='Patterns for filtering files, e.g. *.jsonl')
+    parser.add_argument('--exclude', type=str, default=None)
 
     args = parser.parse_args()
 
@@ -23,6 +24,7 @@ def main():
     proxy_head = args.proxy
     repo = args.repo
     base_url = f"https://huggingface.co/{args.category}/{repo}"
+    exclude = args.exclude
 
     file_ls = []
     for p in args.patterns:
@@ -34,6 +36,10 @@ def main():
 
     for f in file_ls:
         fname = f.relative_to(local_path).as_posix()
+        if exclude is not None:
+            if exclude in fname:
+                print(f"{fname} is excluded!")
+                continue
         if f.stat().st_size > 10 * 1024:
             print(f"Seems like {fname} is already downloaded, pass.")
             continue
