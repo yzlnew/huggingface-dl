@@ -9,7 +9,7 @@ def main():
 
     parser.add_argument('folder_name', type=str, help='Name of the local folder of target repo, without lfs.')
     parser.add_argument('--repo', type=str, help='Huggingface repo name, e.g. liwu/MNBNV')
-    parser.add_argument('--category', type=str, default='datasets', help='Download category. Default is "datasets".')
+    parser.add_argument('--category', type=str, default='models', help='Download category. `models` or `datasets`.')
     parser.add_argument('--proxy', type=str, required=True, help='Cloudflare proxy to accelerate.')
     parser.add_argument('--patterns', type=str, nargs='+', help='Patterns for filtering files, e.g. *.jsonl')
     parser.add_argument('--exclude', type=str, default=None)
@@ -23,7 +23,7 @@ def main():
     local_path = Path(args.folder_name)
     proxy_head = args.proxy
     repo = args.repo
-    base_url = f"https://huggingface.co/{args.category}/{repo}"
+    base_url = f"https://huggingface.co/{args.category}/{repo}" if args.category == "datasets" else f"https://huggingface.co/{repo}"
     exclude = args.exclude
 
     file_ls = []
